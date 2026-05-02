@@ -9,6 +9,6 @@ main = Blueprint("main", __name__)
 
 
 @main.route("/")
-def index():
+def createticket():
     records = Techs.query.order_by(Techs.techEmployeeID.desc()).all()
-    return render_template("index.html", records=records)
+    return render_template("createticket.html", records=records)
