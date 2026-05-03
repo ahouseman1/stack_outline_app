@@ -1,3 +1,4 @@
+from sqlalchemy import Nullable
 from sqlalchemy.orm import backref
 from .extensions import db
 
@@ -25,8 +26,8 @@ class Users(db.Model):
 class Inventory(db.Model):
     itemID = db.Column(db.Integer, primary_key=True)
     itemDescription = db.Column(db.String(20), nullable=False)
-    assignedUser = db.Column(db.Integer, db.ForeignKey("users.userEmployeeID"), nullable=False)
-    rotationDate = db.Column(db.Date)
+    assignedUser = db.Column(db.Integer, db.ForeignKey("users.userEmployeeID"))
+    rotationDate = db.Column(db.Date, nullable=False)
 
     itemTickets = db.relationship("Tickets", backref = "ticketDevice")
 
@@ -38,7 +39,7 @@ class Tickets(db.Model):
     submittingUser = db.Column(db.Integer, db.ForeignKey("users.userEmployeeID"), nullable=False)
     ticketText = db.Column(db.String(100))
     ticketItem = db.Column(db.Integer, db.ForeignKey("inventory.itemID"), nullable=False)
-    assignedTech = db.Column(db.Integer, db.ForeignKey("techs.techEmployeeID"), nullable=False)
+    assignedTech = db.Column(db.Integer, db.ForeignKey("techs.techEmployeeID"))
     ticketDate = db.Column(db.Date, nullable=False)
 
 

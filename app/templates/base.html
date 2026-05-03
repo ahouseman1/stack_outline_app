@@ -8,11 +8,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="{{ url_for('main.createticket') }}">Stack Outline App</a>
-      </div>
-    </nav>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container">
+              <a class="navbar-brand" href="{{ url_for('main.createticket') }}">Create Ticket</a>
+          </div>
+
+          <div class="container">
+              <a class="navbar-brand" href="{{ url_for('main.ticketmanagement') }}">Ticket Management</a>
+          </div>
+
+          <div class="container">
+              <a class="navbar-brand" href="{{ url_for('main.employeemanagement') }}">Employee Management</a>
+          </div>
+
+          <div class="container">
+              <a class="navbar-brand" href="{{ url_for('main.inventorymanagement') }}">Inventory Management</a>
+          </div>
+
+      </nav>
 
     <main class="container py-4">
       {% block content %}{% endblock %}
