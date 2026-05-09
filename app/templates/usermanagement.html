@@ -1,25 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}Employee Management | Example Ticketing System{% endblock %}
+{% block title %}Inventory Management | Example Ticketing System{% endblock %}
 
 {% block content %}
 <section class="mb-4">
-  <h1 class="h3">Employee Management</h1>
+  <h1 class="h3">Inveontory Management</h1>
 </section>
 
-<a href="#" class="btn btn-secondary btn-lg">Users</a>
-<a href="#" class="btn btn-primary btn-lg">Techs</a>
-<a href="#" class="btn btn-secondary btn-lg">Create new employee</a>
+<a href="#" class="btn btn-primary btn-lg">Users</a>
+<a href="/employeemanagement/techmanagement" class="btn btn-secondary btn-lg">Techs</a>
+<a href="/employeemanagement/createemployee" class="btn btn-secondary btn-lg">Create new employee</a>
 
 <br>
 
 <form method="POST" action="{{url_for('main.usermanagement')}}">
+
+    <br>
+
     <h3 class="h3">Users</h3>
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">User ID</th>
-                <th scope="col">Users name</th>
+                <th scope="col">User Employee ID</th>
+                <th scope="col">Users Name</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -29,7 +32,7 @@
             <tr>
                 <th scope="row">{{user.userEmployeeID}}</th>
                 <td>{{user.userName}}</td>
-                <td><button type="button" name="edit" class="btn btn-secondary" data-toggle="modal" data-target="#editmodal" 
+                <td><button type="button" name="edit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editusermodal" 
                             data-userID="{{user.userEmployeeID}}" data-userName="{{user.userName}}">Edit user</button></td>
                 <td><button type="submit" name="delete" value="{{user.userEmployeeID}}" class="btn btn-danger">Delete user</button></td>
             </tr>
@@ -43,19 +46,19 @@
 
 
 
-<div class="modal fade" id="editmodal" tabindex="-1">
+<div class="modal fade" id="editusermodal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="editmodaltitle">Edit User</h2>
+                <h2 class="modal-title" id="editusermodaltitle">Edit User</h2>
 
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{url_for('mail.usermanagement')}}">
+                <form method="POST" action="{{url_for('main.usermanagement')}}">
                     <input type="hidden" id="modalhiddenuserid">
                     <div class="form-group">
-                        <label for="modaluserid">Users ID</label>
-                        <input type="text" id="modaluserid">
+                        <label for="modaluserid">Users Employee ID</label>
+                        <input type="text" id="modaluserid" disabled>
                     </div>
 
                     <br>
@@ -67,7 +70,7 @@
 
                     <br>
 
-                    <button type="button" name="canceledits" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" name="canceledits" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" name="submitedits" class="btn btn-primary">Save Changes</button>
 
                 </form>
@@ -82,18 +85,18 @@
 
 
 <script>
-    const modal = document.getElementById("editmodal");
+    const usermodal = document.getElementById("editusermodal");
 
-    modal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedtarget;
-        const userID = button.getAttribute('data-userID');
-        const userName = button.getAttribute('date-userName')
+    usermodal.addEventListener('show.bs.modal', function (event) {
+        const userButton = event.relatedtarget;
+        const userID = userButton.getAttribute('data-userID');
+        const userName = userButton.getAttribute('data-userName')
 
-        const thismodal = this;
+        const thisUserModal = this;
 
-        thismodal.querySelector('#modalhiddenuserid').value = userID;
-        thismodal.querySelector('#modaluserid').value = userID;
-        thismodal.querySelector('#modalusername').value = userName;
+        thisUserModal.querySelector('#modalhiddenuserid').value = userID;
+        thisUserModal.querySelector('#modaluserid').value = userID;
+        thisUserModal.querySelector('#modalusername').value = userName;
     });
 
 

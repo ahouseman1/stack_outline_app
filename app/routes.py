@@ -29,7 +29,7 @@ def submitticket(userID):
     user = Users.query.get_or_404(userID)
 
     if request.method == "POST":
-        deviceID = request.form.get("DeviceID")
+        print("hi") # filler till I work on backend
 
     userDevices = Inventory.query.filter_by(assignedUser=user.employeeID).all()
 
@@ -37,12 +37,31 @@ def submitticket(userID):
 
 @main.route("/ticketmanagement")
 def ticketmanagement():
+    if request.method == "POST":
+        ticketID = request.form.get("hiddenTicketID")
+
+        if not ticketID:
+            return "Invalid Ticket", 400
+
+        return redirect(url_for("submitticket", ticketID=ticketID))
+
     techs = Techs.query.order_by(Techs.techEmployeeID.desc()).all()
     users = Users.query.order_by(Users.userEmployeeID.desc()).all()
     items = Inventory.query.order_by(Inventory.itemID.desc()).all()
     tickets = Tickets.query.order_by(Tickets.ticketID.desc()).all()
 
     return render_template("ticketmanagement.html", techs=techs, users=users, items=items, tickets=tickets)
+
+@main.route("/ticketmanagement/<int:ticketID>", methods=["GET","POST"])
+def ticketdetails(ticketID):
+    
+    ticket = Tickets.query.get_or_404(ticketID)
+    
+    if request.method == "POST":
+        print("Hi") #filler till I work on backend
+
+    techs = Techs.query.order_by(Techs.techEmployeeID.desc()).all()
+    return render_template("ticketdetails.html", ticket=ticket, techs=techs)
 
 @main.route("/employeemanagement")
 def employeemanagement():
@@ -53,11 +72,14 @@ def usermanagement():
      users = Users.query.order_by(Users.userEmployeeID.desc()).all()
      return render_template("usermanagement.html", users=users)
 
+@main.route("/employeemanagement/techmanagement")
+def techmanagement():
+    techs = Techs.query.order_by(Techs.techEmployeeID.desc()).all()
+    return render_template("techmanagement.html", techs=techs)
 
-
-
-
-
+@main.route("/employeemanagement/createemployee")
+def createemployee():
+    return render_template("createemployee.html")
 
 
 
@@ -65,4 +87,5 @@ def usermanagement():
 @main.route("/inventorymanagement")
 def inventorymanagement():
     items = Inventory.query.order_by(Inventory.itemID.desc()).all()
-    return render_template("inventorymanagement.html", items=items)
+    users = Users.query.order_by(Users.userEmployeeID.desc()).all()
+    return render_template("inventorymanagement.html", items=items, users=users)

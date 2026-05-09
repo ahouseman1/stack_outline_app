@@ -1,25 +1,190 @@
 {% extends "base.html" %}
 
-{% block title %}Inventory Management | Example Ticketing System{% endblock %}
+{% block title %}Employee Management | Example Ticketing System{% endblock %}
 
 {% block content %}
 <section class="mb-4">
-  <h1 class="h3">Flask + SQLAlchemy + Jinja2 Starter</h1>
-  <p class="text-muted mb-0">
-    This page demonstrates a minimal HTML5/CSS3 frontend with Bootstrap and server-side rendering.
-  </p>
+  <h1 class="h3">Inventory Management</h1>
 </section>
+<br>
+<button type="button" name="create" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createitemmodal">Add Item</button>
+<br>
+<form method="POST" action="{{url_for('main.inventorymanagement')}}">
+    <h3 class="h3">Inventory</h3>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Device ID</th>
+                <th scope="col">Device Description</th>
+                <th scope="col">Assigned User</th>
+                <th scope="col">Rotation Date</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <th scope="row">{{item.itemID}}</th>
+                <td>{{item.itemDescription}}</td>
+                <td>{{item.userAssigned.userName}}</td>
+                <td>{{item.rotationDate}}</td>
+                <td><button type="button" name="edit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#edititemmodal"
+                            data-itemID="{{item.itemID}}" data-itemDescription="{{item.itemDescription}}" 
+                            data-itemAssignment="{{item.userAssigned.userID}}" 
+                            data-itemRotationDate="{{item.rotationDate}}">Edit item</button></td>
+                <td><button type="submit" name="delete" value="{{item.itemID}}" class="btn btn-danger">Delete item</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<section>
-  <h2 class="h5">Example Records</h2>
-  {% if records %}
-    <ul class="list-group">
-      {% for record in records %}
-        <li class="list-group-item">{{ record.title }}</li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <div class="alert alert-info mb-0">No records yet. Add some through the Flask shell or extend routes with a form/API.</div>
-  {% endif %}
-</section>
+</form>
+
+
+
+
+
+<div class="modal fade" id="edititemmodal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="edititemmodaltitle">Edit Item</h2>
+
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{url_for('main.inventorymanagement')}}">
+                    <input type="hidden" id="modalhiddenitemid">
+                    <div class="form-group">
+                        <label for="modalitemid">Item ID</label>
+                        <input type="text" id="modalitemid" disabled>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <label for="modalitemdescription">Item Description</label>
+                        <input type="text" id="modalitemdescription">
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <label for="modalitemassignment">Assigned User</label>
+                        <select class="custom-select" id="modalitemassignemt">
+                            <option selected value="-1">Unassigned</option>
+                            {% for user in users %}
+                            <option value="{{user.userEmployeeID}}">{{user.userName}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <label for="modalitemrotationdate">Rotation Date</label>
+                        <input type="date" id="modalitemrotationdate">
+                    </div>
+
+                    <br>
+
+                    <button type="button" name="canceledits" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submitedits" class="btn btn-primary">Save Changes</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="createitemmodal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="createitemmodaltitle">Edit Item</h2>
+
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{url_for('main.inventorymanagement')}}">
+                    <div class="form-group">
+                        <label for="modalcreateitemdescription">Item Description</label>
+                        <input type="text" id="modalcreateitemdescription">
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <label for="modalcreateitemassignment">Assigned User</label>
+                        <select class="custom-select" id="modalcreateitemassignemt">
+                            <option selected value="-1">Unassigned</option>
+                            {% for user in users %}
+                            <option value="{{user.userEmployeeID}}">{{user.userName}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <label for="modalcreateitemrotationdate">Rotation Date</label>
+                        <input type="date" id="modalcreateitemrotationdate">
+                    </div>
+
+                    <br>
+
+                    <button type="button" name="cancelcreation" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submitcreation" class="btn btn-primary">Create Item</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    const itemmodal = document.getElementById("edititemmodal");
+
+    itemmodal.addEventListener('show.bs.modal', function (event) {
+        const itemButton = event.relatedtarget;
+        const itemID = itemButton.getAttribute('data-itemID');
+        const itemDescription = itemButton.getAttribute('data-itemDescription');
+        const itemAssigned = itemButton.getAttribute('data-itemAssignment');
+        const itemRotationDate = itemButton.getAttribute('data-itemRotationDate');
+
+
+
+        const thisItemModal = this;
+
+        thisItemModal.querySelector('#modalhiddenitemid').value = itemID;
+        thisItemModal.querySelector('#modalitemid').value = itemID;
+        thisItemModal.querySelector('#modalitemdescription').value = itemDescription;
+        thisItemModal.querySelector('#modalitemassignment').value = itemAssigned;
+        thisItemModal.querySelector('#modalitemrotationdate').value = itemRotationDate;
+    });
+
+
+
+</script>
+
+
 {% endblock %}
