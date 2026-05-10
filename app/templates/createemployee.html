@@ -13,15 +13,15 @@
 
 <br>
 
-<form method="POST" action="{{ url_for('main.createticket')}}">
+<form method="POST" action="{{ url_for('main.createemployee')}}">
 
     <br>
 
     <div class="form-group">
         <label for="employeeType">Employee Type</label>
         <select class="custom-select" name="employeeType" required>
-            <option value="tech">Tech</option>
             <option value="user">User</option>
+            <option value="tech">Tech</option>
         </select>
     </div>
 
@@ -29,7 +29,7 @@
 
     <div class="form-group">
         <label for="employeeName">Employee Name</label>
-        <input type="text" id="employeeName">
+        <input type="text" id="employeeName" name="employeeName" required>
     </div>
 
     <br>

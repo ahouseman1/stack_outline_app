@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Ticket Management | Example Ticketing System{% endblock %}
+{% block title %}{{tech.techName}} Tickets | Example Ticketing System{% endblock %}
 
 {% block content %}
 <section class="mb-4">
     <h1 class="h3">Ticket Management</h1>
 </section>
 
-<h3 class="h3">Tickets</h3>
+<br>
+
+<h3 class="h3">{{tech.techName}} Tickets</h3>
+<a class="btn btn-secondary" href="/employeemanagement/techmanagement">Go Back</a>
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -25,7 +28,7 @@
             <td>{{ticket.ticketDevice.itemDescription}}</td>
             <td>
                 <form method="POST" action="{{ url_for('main.ticketmanagement')}}">
-                    <button type="submit" name="viewTicket" class="btn btn-primary" value="{{ticket.ticketID}}">View Ticket</button>
+                    <button type="submit" class="btn btn-primary" name="viewTechTicket" value="{{ticket.ticketID}}">View Ticket</button>
                 </form>
             </td>
         </tr>

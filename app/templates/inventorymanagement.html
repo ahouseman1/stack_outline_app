@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Employee Management | Example Ticketing System{% endblock %}
+{% block title %}Inventory Management | Example Ticketing System{% endblock %}
 
 {% block content %}
 <section class="mb-4">
   <h1 class="h3">Inventory Management</h1>
 </section>
 <br>
-<button type="button" name="create" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createitemmodal">Add Item</button>
+<a href="/inventorymanagement/createitem"  class="btn btn-primary">Add Item</a>
 <br>
 <form method="POST" action="{{url_for('main.inventorymanagement')}}">
     <h3 class="h3">Inventory</h3>
@@ -29,10 +29,7 @@
                 <td>{{item.itemDescription}}</td>
                 <td>{{item.userAssigned.userName}}</td>
                 <td>{{item.rotationDate}}</td>
-                <td><button type="button" name="edit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#edititemmodal"
-                            data-itemID="{{item.itemID}}" data-itemDescription="{{item.itemDescription}}" 
-                            data-itemAssignment="{{item.userAssigned.userID}}" 
-                            data-itemRotationDate="{{item.rotationDate}}">Edit item</button></td>
+                <td><button type="submit" name="edit" class="btn btn-secondary" value="{{item.itemID}}">Edit item</button></td>
                 <td><button type="submit" name="delete" value="{{item.itemID}}" class="btn btn-danger">Delete item</button></td>
             </tr>
             {% endfor %}
@@ -54,24 +51,24 @@
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{url_for('main.inventorymanagement')}}">
-                    <input type="hidden" id="modalhiddenitemid">
+                    <input type="hidden" id="modalHiddenItemID" name="modalHiddenItemID">
                     <div class="form-group">
                         <label for="modalitemid">Item ID</label>
-                        <input type="text" id="modalitemid" disabled>
+                        <input type="text" name="modalItemID" id="modalItemID" disabled>
                     </div>
 
                     <br>
 
                     <div class="form-group">
-                        <label for="modalitemdescription">Item Description</label>
-                        <input type="text" id="modalitemdescription">
+                        <label for="modalItemDescription">Item Description</label>
+                        <input type="text" name="modalItemDescription" id="modalItemDescription" required>
                     </div>
 
                     <br>
 
                     <div class="form-group">
-                        <label for="modalitemassignment">Assigned User</label>
-                        <select class="custom-select" id="modalitemassignemt">
+                        <label for="modalItemAssignment">Assigned User</label>
+                        <select class="custom-select" id="modalItemAssignemt" name="modalItemAssignment" required>
                             <option selected value="-1">Unassigned</option>
                             {% for user in users %}
                             <option value="{{user.userEmployeeID}}">{{user.userName}}</option>
@@ -83,14 +80,14 @@
                     <br>
 
                     <div class="form-group">
-                        <label for="modalitemrotationdate">Rotation Date</label>
-                        <input type="date" id="modalitemrotationdate">
+                        <label for="modalItemRotationDate">Rotation Date</label>
+                        <input type="date" id="modalItemRotationDate" name="modalItemRotationDate" required>
                     </div>
 
                     <br>
 
                     <button type="button" name="canceledits" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="submitedits" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" name="submitedits" value="1" class="btn btn-primary">Save Changes</button>
 
                 </form>
             </div>
@@ -112,15 +109,15 @@
             <div class="modal-body">
                 <form method="POST" action="{{url_for('main.inventorymanagement')}}">
                     <div class="form-group">
-                        <label for="modalcreateitemdescription">Item Description</label>
-                        <input type="text" id="modalcreateitemdescription">
+                        <label for="modalCreateItemDescription">Item Description</label>
+                        <input type="text" id="modalCreateItemDescription" name="modalCreateItemDescription" required>
                     </div>
 
                     <br>
 
                     <div class="form-group">
-                        <label for="modalcreateitemassignment">Assigned User</label>
-                        <select class="custom-select" id="modalcreateitemassignemt">
+                        <label for="modalCreateItemAssignment">Assigned User</label>
+                        <select class="custom-select" id="modalCreateItemAssignemt" name="modalCreateItemAssignment" required>
                             <option selected value="-1">Unassigned</option>
                             {% for user in users %}
                             <option value="{{user.userEmployeeID}}">{{user.userName}}</option>
@@ -132,14 +129,14 @@
                     <br>
 
                     <div class="form-group">
-                        <label for="modalcreateitemrotationdate">Rotation Date</label>
-                        <input type="date" id="modalcreateitemrotationdate">
+                        <label for="modalCreateItemRotationDate">Rotation Date</label>
+                        <input type="date" id="ModalCreateItemRotationDate" name="modalCreateItemRotationDate" required>
                     </div>
 
                     <br>
 
                     <button type="button" name="cancelcreation" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="submitcreation" class="btn btn-primary">Create Item</button>
+                    <button type="submit" name="submitcreation" value="1" class="btn btn-primary">Create Item</button>
 
                 </form>
             </div>
@@ -175,11 +172,11 @@
 
         const thisItemModal = this;
 
-        thisItemModal.querySelector('#modalhiddenitemid').value = itemID;
-        thisItemModal.querySelector('#modalitemid').value = itemID;
-        thisItemModal.querySelector('#modalitemdescription').value = itemDescription;
-        thisItemModal.querySelector('#modalitemassignment').value = itemAssigned;
-        thisItemModal.querySelector('#modalitemrotationdate').value = itemRotationDate;
+        thisItemModal.querySelector('#modalHiddenItemID').value = itemID;
+        thisItemModal.querySelector('#modalItemID').value = itemID;
+        thisItemModal.querySelector('#modalItemDescription').value = itemDescription;
+        thisItemModal.querySelector('#modalItemAssignment').value = itemAssigned;
+        thisItemModal.querySelector('#modalItemRotationDate').value = itemRotationDate;
     });
 
 

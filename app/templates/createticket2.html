@@ -7,22 +7,22 @@
   <h1 class="h3">Create a Ticket</h1>
 </section>
 
-<form method="POST">
+<form method="POST" action="{{url_for('main.createticket')}}">
     <div class="form-group">
-        <label for="UserID">Submitter Name</label>
-        <select class="custom-select" name="userID" required>
-            <option value="{user.userEmployeeID}">{user.userName}</option>
+        <label for="fakeUserID">Submitter Name</label>
+        <select class="custom-select" name="fakeUserID" id="fakeUserID" required>
+            <option value="{{user.userEmployeeID}}">{{user.userName}}</option>
         </select>
     </div>
 
-    <input type="hidden" name="UserID" value="user.userEmployeeID">
+    <input type="hidden" name="userID" value="{{user.userEmployeeID}}">
 
     <br>
     <div class="form-group">
-        <label for="UserDevice">Select which device is having issues</label>
-        <select class="custom-select" name="UserDevice" required>
+        <label for="userDevice">Select which device is having issues</label>
+        <select class="custom-select" name="userDevice" id="userDevice" required>
             {% for device in userDevices %}
-                <option value="{device.itemID}">{device.itemDescription}</option>
+                <option value="{{device.itemID}}">{{device.itemDescription}}</option>
             {% endfor %}
         </select>
 
@@ -31,12 +31,12 @@
     <br>
 
     <div class="form-group">
-        <label for="TicketText">Please describe the problem:</label>
-        <textarea class="form-control" id="TicketText" rows="3" maxlength="100"></textarea>
+        <label for="ticketText">Please describe the problem:</label>
+        <textarea class="form-control" id="ticketText" name="ticketText" rows="3" maxlength="100" required></textarea>
     </div>
 
     <br>
 
-    <button type="submit" class="btn btn-primary">Create Ticket</button>
+    <button type="submit" name="submitTicket" value="{{user.userEmployeeID}}" class="btn btn-primary">Create Ticket</button>
 </form>
 {% endblock %}

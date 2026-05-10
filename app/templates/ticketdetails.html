@@ -7,44 +7,46 @@
   <h1 class="h3">Ticket Details</h1>
 </section>
 
-<form method="POST" action="{{ url_for('main.ticketdetails')}}">
+<form method="POST" action="{{ url_for('main.ticketmanagement')}}">
 
     <div class="form-group">
         <label for="ticketID">Ticket ID</label>
-        <input disabled id="ticketID" value="{{ticket.ticketID}}">
+        <input disabled id="ticketID" name="ticketID" value="{{ticket.ticketID}}">
     </div>
 
     <br>
 
     <div class="form-group">
         <label for="submittingUser">Submitting User</label>
-        <input disabled id="submittingUser" value="{{ticket.creatingUser.userName}}">
+        <input disabled id="submittingUser" name="submittingUser" value="{{ticket.creatingUser.userName}}">
     </div>
 
     <br>
 
     <div class="form-group">
         <label for="ticketText">Ticket Text</label>
-        <textarea disabled id="ticketText">{{ticket.ticketText}}</textarea>
+        <textarea disabled id="ticketText" name="ticketText">{{ticket.ticketText}}</textarea>
     </div>
 
     <br>
 
     <div class="form-group">
         <label for="ticketItemID">Ticket Item ID</label>
-        <input disabled id="ticketItemID" value="{{ticket.ticketItem}}">
-    </div>
-
-    <div class="form-group">
-        <label for="ticketItem">Ticket Item Description</label>
-        <input disabled id="ticketItem" value="{{ticket.ticketDevice.itemDescription}}">
+        <input disabled id="ticketItemID" name="ticketText" value="{{ticket.ticketItem}}">
     </div>
 
     <br>
 
     <div class="form-group">
-        <label for="techassignment">Assigned Tech</label>
-        <select class="custom-select" id="techassignemt">
+        <label for="ticketItem">Ticket Item Description</label>
+        <input disabled id="ticketItem" name="ticketItem" value="{{ticket.ticketDevice.itemDescription}}">
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label for="techAssignment">Assigned Tech</label>
+        <select class="custom-select" id="techAssignemt" name="techAssignment" required>
             <option value="-1"
                     {% if not ticket.assignedTech%}
                     selected
@@ -67,13 +69,13 @@
 
     <div class="form-group">
         <label for="ticketDate">Ticket Date</label>
-        <input disabled id="ticketDate" value="{{ticket.ticketDate}}">
+        <input disabled id="ticketDate" name="ticketDate" value="{{ticket.ticketDate}}">
     </div>
 
     <br>
 
     <a href="/ticketmanagement" class="btn btn-secondary">Go Back</a>
-    <button type="submit" class="btn btn-primary" name="action" value="submit">Submit User Change</button>
-    <button type="submit" class="btn btn-danger" name="action" value="delete">Delete Ticket</button>
+    <button type="submit" class="btn btn-primary" name="edit" value="{{ticketID}}">Submit User Change</button>
+    <button type="submit" class="btn btn-danger" name="delete" value="{{ticketID}}">Delete Ticket</button>
 </form>
 {% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Create Item | Example Ticketing System{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+    <h1 class="h3">Create an Item</h1>
+</section>
+
+<br>
+
+<a href="/inventorymanagement" class="btn btn-secondary">Go Back</a> 
+
+<form method="POST" action="{{url_for('main.inventorymanagement')}}">
+    <div class="form-group">
+        <label for="createItemDescription">Item Description</label>
+        <input type="text" id="createItemDescription" name="createItemDescription" required>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label for="createItemAssignment">Assigned User</label>
+        <select class="custom-select" id="createItemAssignemt" name="createItemAssignment" required>
+            <option selected value="-1">Unassigned</option>
+            {% for user in users %}
+            <option value="{{user.userEmployeeID}}">{{user.userName}}</option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label for="createItemRotationDate">Rotation Date</label>
+        <input type="date" id="createItemRotationDate" name="createItemRotationDate" required>
+    </div>
+
+    <br>
+
+    <a href="/inventorymanagement" class="btn btn-secondary">Cancel</a>
+    <button type="submit" name="submitcreation" class="btn btn-primary">Create Item</button>
+
+</form>
+
+{% endblock %}

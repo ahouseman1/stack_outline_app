@@ -12,13 +12,13 @@
         <label for="UserID">Submitter Name</label>
         <select class="custom-select" name="userID" required>
             {% for user in users %}
-            <option value="{user.userEmployeeID}">{user.userName}</option>
+            <option value="{{user.userEmployeeID}}">{{user.userName}}</option>
             {% endfor %}
         </select>
     </div>
 
     <br>
 
-    <button type="submit" class="btn btn-primary">Next</button>
+    <button type="submit" name="startTicket"  class="btn btn-primary">Next</button>
 </form>
 {% endblock %}

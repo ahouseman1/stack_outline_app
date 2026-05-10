@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Tech | Example Ticketing System{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+  <h1 class="h3">Create a Ticket</h1>
+</section>
+
+<form method="POST" action="{{url_for('main.techmanagement')}}">
+    <input type="hidden" id="hiddenTechId" name="hiddenTechID" value="{{tech.techEmployeeID}}">
+    <div class="form-group">
+        <label for="techID">Techs Employee ID</label>
+        <input type="text" id="techID" name="techID" value="{{tech.techEmployeeID}}" disabled>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label for="techName">Tech Name</label>
+        <input type="text" id="techName" name="techName" value="{{tech.techName}}">
+    </div>
+
+    <br>
+
+    <a href="/employeemanagement/techmanagement" class="btn btn-secondary">Cancel</a>
+    <button type="submit" name="submitedits" class="btn btn-primary">Save Changes</button>
+
+</form>
+{% endblock %}

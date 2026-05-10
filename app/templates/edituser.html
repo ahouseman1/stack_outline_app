@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Edit User | Example Ticketing System{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+  <h1 class="h3">Create a Ticket</h1>
+</section>
+
+<form method="POST" action="{{url_for('main.usermanagement')}}">
+    <input type="hidden" id="hiddenUserId" name="hiddenUserID" value="{{user.userEmployeeID}}">
+    <div class="form-group">
+        <label for="userID">Users Employee ID</label>
+        <input type="text" id="userID" name="userID" value="{{user.userEmployeeID}}" disabled>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label for="userName">Users Name</label>
+        <input type="text" id="userName" name="userName" value="{{user.userName}}">
+    </div>
+
+    <br>
+
+    <a href="/employeemanagement/usermanagement" class="btn btn-secondary">Cancel</a>
+    <button type="submit" name="submitedits" class="btn btn-primary">Save Changes</button>
+
+</form>
+{% endblock %}

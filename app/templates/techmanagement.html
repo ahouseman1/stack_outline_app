@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Employee Management | Example Ticketing System{% endblock %}
+{% block title %}Tech Management | Example Ticketing System{% endblock %}
 
 {% block content %}
 <section class="mb-4">
@@ -23,6 +23,8 @@
             <tr>
                 <th scope="col">Tech Employee ID</th>
                 <th scope="col">Tech Name</th>
+                <th scope="col">Tickets Assigned</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -32,76 +34,21 @@
             <tr>
                 <th scope="row">{{tech.techEmployeeID}}</th>
                 <td>{{tech.techName}}</td>
-                <td><button type="button" name="edit" class="btn btn-secondary" data-toggle="modal" data-target="#edittechmodal" 
-                            data-techID="{{tech.techEmployeeID}}" data-techName="{{tech.techName}}">Edit Tech</button></td>
-                <td><button type="submit" name="delete" value="{{tech.techEmployeeID}}" class="btn btn-danger">Delete Tech</button></td>
+                <td>{{tech.tickets|length}}</td>
+                <td>
+                    <button type="submit" name="viewTechTickets" value="{{tech.techEmployeeID}}" class="btn btn-primary">View Tickets</button>
+                </td>
+                <td>
+                    <button type="submit" name="edit" class="btn btn-secondary" value="{{tech.techEmployeeID}}">Edit Tech</button>
+                </td>
+                <td>
+                    <button type="submit" name="delete" value="{{tech.techEmployeeID}}" class="btn btn-danger">Delete Tech</button>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
 </form>
-
-
-
-
-
-<div class="modal fade" id="edittechmodal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="edittechmodaltitle">Edit Tech</h2>
-
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{url_for('main.techmanagement')}}">
-                    <input type="hidden" id="modalhiddentechid">
-                    <div class="form-group">
-                        <label for="modaltechid">Tech ID</label>
-                        <input type="text" id="modaltechid" disabled>
-                    </div>
-
-                    <br>
-
-                    <div class="form-group">
-                        <label for="modaltechname">Tech Name</label>
-                        <input type="text" id="modaltechname">
-                    </div>
-
-                    <br>
-
-                    <button type="button" name="canceledits" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="submitedits" class="btn btn-primary">Save Changes</button>
-
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-<script>
-    const techModal = document.getElementById("edittechmodal");
-
-    techModal.addEventListener('show.bs.modal', function (event) {
-        const techButton = event.relatedtarget;
-        const techID = techButton.getAttribute('data-techID');
-        const techName = techButton.getAttribute('data-techName')
-
-        const thisTechModal = this;
-
-        thisTechModal.querySelector('#modalhiddentechid').value = techID;
-        thisTechModal.querySelector('#modaltechid').value = techID;
-        thisTechModal.querySelector('#modaltechname').value = techName;
-    });
-
-
-
-</script>
-
 
 {% endblock %}

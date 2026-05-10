@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Item | Example Ticketing System{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+    <h1 class="h3">Edit an Item</h1>
+</section>
+
+<br>
+
+<a href="/inventorymanagement" class="btn btn-secondary">Go Back</a> 
+
+<form method="POST" action="{{url_for('main.inventorymanagement')}}">
+    <div class="form-group">
+        <label for="itemID">Item ID</label>
+        <input id="itemID" name="itemID" value="{{item.itemID}}" disabled>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label for="itemDescription">Item Description</label>
+        <input type="text" id="itemDescription" name="itemDescription" value="{{item.itemDescription}}" required>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label for="itemAssignment">Assigned User</label>
+        <select class="custom-select" id="itemAssignemt" name="itemAssignment" required>
+            <option value="-1"
+                {% if item.assignedUser is none %}
+                    selected
+                {% endif %}
+                    >Unassigned</option>
+            {% for user in users %}
+            <option value="{{user.userEmployeeID}}"
+                {% if item.assignedUser == user.userEmployeeID %}
+                    selected
+                {% endif %}
+                    >{{user.userName}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label for="itemRotationDate">Rotation Date</label>
+        <input type="date" id="itemRotationDate" name="itemRotationDate" value="{{item.rotationDate}}" required>
+    </div>
+
+    <br>
+
+    <a href="/inventorymanagement" class="btn btn-secondary">Cancel</a>
+    <button type="submit" name="submitedits" class="btn btn-primary" value="{{item.itemID}}">Submit Edits</button>
+
+</form>
+
+{% endblock %}
