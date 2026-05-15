@@ -1,31 +1,8 @@
-# Stack Outline App
+## Project Overview
 
-Barebones project outline for:
-- Python 3
-- Flask backend
-- Relational DB (SQLite by default)
-- SQLAlchemy ORM
-- HTML5/CSS3 frontend with Bootstrap and Jinja2 templates
-- Git version control
+This project is a sample ticketing system created as a final project for my databases class.
 
-## Project Structure
-
-```
-stack_outline_app/
-  app/
-    __init__.py
-    extensions.py
-    models.py
-    routes.py
-    static/css/styles.css
-    templates/base.html
-    templates/index.html
-  config.py
-  run.py
-  requirements.txt
-  .env.example
-  .gitignore
-```
+The ticketing system can be used to create and manage both users and techs, inventory and tickets.
 
 ## Quick Start
 
@@ -44,8 +21,19 @@ stack_outline_app/
    ```
 4. Open http://127.0.0.1:5000
 
-## Notes
+## Database
 
-- SQLite is used out of the box via `DATABASE_URL=sqlite:///app.db`.
-- To switch databases, set `DATABASE_URL` (for example, PostgreSQL/MySQL URI) and install the corresponding driver.
-- Tables are auto-created at startup for this minimal starter (`db.create_all()`).
+The database will be initialy create when the project is run if there is no database file in the instance folder named app.db
+
+to regenerate the file if the database schema is changed, simply delete tthe file.
+
+## Usage
+
+To launch the project simply:
+
+1. Run the app:
+   ```bash
+   python run.py
+   ```
+
+2. Open http://127.0.0.1:5000
