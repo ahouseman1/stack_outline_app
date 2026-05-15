@@ -6,20 +6,22 @@ The ticketing system can be used to create and manage both users and techs, inve
 
 ## Quick Start
 
-1. Create and activate a virtual environment.
+1. Install Python and pip
+
+2. Create and activate a virtual environment.
    ```
    python -m venv venv   
    venv\Scripts\activate 
    ```
-2. Install dependencies:
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. Run the app:
+4. Run the app:
    ```bash
    python run.py
    ```
-4. Open http://127.0.0.1:5000
+5. Open http://127.0.0.1:5000
 
 ## Database
 
